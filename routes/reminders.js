@@ -22,13 +22,13 @@ router.get('/reminders/:id/edit', function(req, res) {
     if (err) {
       res.status(500).json(err);
     } else {
-      res.status(300).json(foundReminder);
+      res.status(200).json(foundReminder);
     }
   });
 });
 
 //Update
-router.put('/reminders/:id', function(req, res) {
+router.put('/reminders/:id/edit', function(req, res) {
   Reminder.findByIdAndUpdate(
     req.params.id,
     req.body.reminder,
@@ -37,18 +37,18 @@ router.put('/reminders/:id', function(req, res) {
       if (err) {
         res.status(500).json(err);
       } else {
-        res.status(300).json(updatedReminder);
+        res.status(200).json(updatedReminder);
       }
     }
   );
 });
 
-router.delete('/reminders/:id', function(req, res) {
+router.delete('/reminders/:id/delete', function(req, res) {
   Reminder.findByIdAndRemove(req.params.id, function(err) {
     if (err) {
       res.status(500).json(err);
     } else {
-      res.status(300).json('Deleted reminder');
+      res.status(200).json('Deleted Reminder');
     }
   });
 });
