@@ -4,16 +4,19 @@ var Subject = require('../models/subject');
 var User = require('../models/user');
 
 //create new subject
-router.post('/users/:id/subjects/:subject_id/lectures/add', function (req, res) {
-  User.findById(req.params.id, function (err, user) {
+router.post('/users/:id/subjects/:subject_id/lectures/add', function(req, res) {
+  User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
     } else {
-      Subject.findById(req.params.subject_id, function(err, subject){
-        if(err){
+      Subject.findById(req.params.subject_id, function(err, subject) {
+        if (err) {
           res.status(500).json(err);
         } else {
-          Lecture.create({ title: req.body.subject.name }, function (err, subject) {
+          Lecture.create({ title: req.body.subject.name }, function(
+            err,
+            subject
+          ) {
             if (err) {
               res.status(500).json(err);
             } else {
@@ -25,21 +28,20 @@ router.post('/users/:id/subjects/:subject_id/lectures/add', function (req, res) 
             }
           });
         }
-      })
-      
+      });
     }
   });
 });
 
 //show details of subject
-router.get('users/:id/subjects/:subject_id', function (req, res) {
-  User.findById(req.params.id, function (err, user) {
+router.get('users/:id/subjects/:subject_id', function(req, res) {
+  User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
     } else {
       Subject.findById(req.params.subject_id)
-        .populate("lectures")
-        .exec(function (err, foundSubject) {
+        .populate('lectures')
+        .exec(function(err, foundSubject) {
           //Populate Subject
           if (err) {
             res.status(500).json(err);
@@ -52,12 +54,12 @@ router.get('users/:id/subjects/:subject_id', function (req, res) {
 });
 
 //Edit
-router.get('users/:id/subjects/:subject_id/edit', function (req, res) {
-  User.findById(req.params.id, function (err, user) {
+router.get('users/:id/subjects/:subject_id/edit', function(req, res) {
+  User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
     } else {
-      Subject.findById(req.params.subject_id, function (err, foundSubject) {
+      Subject.findById(req.params.subject_id, function(err, foundSubject) {
         if (err) {
           res.status(500).json(err);
         } else {
@@ -69,8 +71,8 @@ router.get('users/:id/subjects/:subject_id/edit', function (req, res) {
 });
 
 //Update
-router.put('users/:id/subjects/:subject_id/edit', function (req, res) {
-  User.findById(req.params.id, function (err, user) {
+router.put('users/:id/subjects/:subject_id/edit', function(req, res) {
+  User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
     } else {
@@ -78,7 +80,7 @@ router.put('users/:id/subjects/:subject_id/edit', function (req, res) {
         req.params.subject_id,
         req.body.subject,
         { new: true },
-        function (err, updatedSubject) {
+        function(err, updatedSubject) {
           if (err) {
             res.status(500).json(err);
           } else {
@@ -90,12 +92,12 @@ router.put('users/:id/subjects/:subject_id/edit', function (req, res) {
   });
 });
 
-router.delete('users/:id/subjects/:subject_id/delete', function (req, res) {
-  User.findById(req.params.id, function (err, user) {
+router.delete('users/:id/subjects/:subject_id/delete', function(req, res) {
+  User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
     } else {
-      Subject.findByIdAndRemove(req.params.subject_id, function (err) {
+      Subject.findByIdAndRemove(req.params.subject_id, function(err) {
         if (err) {
           res.status(500).json(err);
         } else {
