@@ -4,7 +4,8 @@ var eventSchema = new mongoose.Schema({
   type: String,
   name: String,
   description: String,
-  date: String,
+  startDate: Date,
+  endDate: Date,
   eventImage: String,
   hostCouncil: String,
 });
