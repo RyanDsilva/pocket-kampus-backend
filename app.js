@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 
 //Models
 const User = require('./models/user');
@@ -16,18 +18,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+//passport 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //routes
 const eventRoutes = require('./routes/event');
-var reminderRoutes = require('./routes/reminders');
+const reminderRoutes = require('./routes/reminders');
+const userRoutes = require('./routes/index');
 
 const port = process.env.PORT || 3000;
 const db = process.env.DATABASEURL || 'mongodb://localhost/scheduletracker';
 
 mongoose.connect(db);
 
+//routes
 app.use(eventRoutes);
-//use routes
 app.use(reminderRoutes);
+app.use(userRoutes);
 
 app.listen(port, () => {
   console.log('Server started on ' + port);
