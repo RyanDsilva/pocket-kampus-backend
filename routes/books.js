@@ -14,7 +14,7 @@ router.get('/books', function(req, res) {
 });
 
 //create new reminder
-router.post('/books', function(req, res) {
+router.post('/books/add', function(req, res) {
   Book.create({ title: req.body.book.title }, function(err, book) {
     if (err) {
       res.status(500).json(err);
