@@ -53,6 +53,33 @@ router.get('/users/:id/dashboard', function(req, res) {
   });
 });
 
+//edit
+router.get('/users/:id/dashboard/edit', function(req, res) {
+  User.findById(req.params.id, function(err, foundUser) {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      res.status(200).json(foundUser);
+    }
+  });
+});
+
+//update
+router.put('/users/:id/dashboard/edit', function(req, res) {
+  User.findByIdAndUpdate(
+    req.params.id,
+    req.body.user,
+    { new: true },
+    function(err, updatedUser) {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        res.status(200).json(updatedUser);
+      }
+    }
+  );
+});
+
 //attendance
 router.get('/users/:id/getAttendance',function(req,res){
   User.findById(req.params.id).populate("attendance").exec(function(err,user){
