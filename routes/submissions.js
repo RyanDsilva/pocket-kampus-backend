@@ -12,7 +12,7 @@ router.post('/users/:id/subjects/:subject_id/submissions/add', function(
     if (err) {
       res.status(500).json(err);
     } else {
-      Subject.findById(req.params.id, function(err, subject) {
+      Subject.findById(req.params.subject_id, function(err, subject) {
         if (err) {
           res.status(500).json(err);
         } else {
