@@ -2,8 +2,7 @@ var mongoose = require('mongoose');
 
 var lectureSchema = new mongoose.Schema({
   description: String,
-  startDate: Date,
-  endDate: Date,
+  date: Date,
 });
 
 module.exports = mongoose.model('Lecture', lectureSchema);

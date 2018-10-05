@@ -4,7 +4,7 @@ var Reminder = require('../models/reminder');
 var User = require('../models/user');
 
 //create new reminder
-router.post('/users/:id/reminders', function(req, res) {
+router.post('/users/:id/reminders/add', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
