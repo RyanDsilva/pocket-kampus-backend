@@ -47,14 +47,16 @@ router.get('users/:id/subjects/:subject_id', function(req, res) {
     if (err) {
       res.status(500).json(err);
     } else {
-      Subject.findById(req.params.subject_id, function(err, foundSubject) {
-        //Populate Subject
-        if (err) {
-          res.status(500).json(err);
-        } else {
-          res.status(200).json(foundSubject);
-        }
-      });
+      Subject.findById(req.params.subject_id)
+        .populate("lectures")
+        .exec(function(err, foundSubject) {
+          //Populate Subject
+          if (err) {
+            res.status(500).json(err);
+          } else {
+            res.status(200).json(foundSubject);
+          }
+        });
     }
   });
 });
