@@ -10,26 +10,26 @@ var userSchema=new mongoose.Schema({
     year:String,
     branch:String,
     isAdmin:Boolean,
-    reminders=[
+    reminders:[
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Reminder" 
         }
     ],
-    subjects=[
+    subjects:[
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Subject" 
         } 
     ],
     attendanceCriteria:Number,
-    attendance=[
+    attendance:[
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Lecture" 
         }
     ],
-    preferences=[]
+    preferences:[]
 });
 
 module.exports=mongoose.model("User",userSchema);

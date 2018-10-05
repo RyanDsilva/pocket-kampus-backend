@@ -3,13 +3,13 @@ var mongoose=require('mongoose');
 var subjectSchema=new mongoose.Schema({
     name:String,
     teacher:String,
-    lecture=[
+    lecture:[
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Lecture" 
         }
     ],
-    resources=[]
+    resources:[]
 });
 
 module.exports=mongoose.model("Subject",subjectSchema);
