@@ -1,15 +1,20 @@
-var mongoose=require('mongoose');
+var mongoose = require('mongoose');
 
-var subjectSchema=new mongoose.Schema({
-    name:String,
-    teacher:String,
-    lecture:[
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Lecture" 
-        }
-    ],
-    resources:[]
+var subjectSchema = new mongoose.Schema({
+  name: String,
+  teacher: String,
+  lectures: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Lecture',
+    },
+  ],
+  submissions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Submission',
+    },
+  ],
 });
 
-module.exports=mongoose.model("Subject",subjectSchema);
+module.exports = mongoose.model('Subject', subjectSchema);
