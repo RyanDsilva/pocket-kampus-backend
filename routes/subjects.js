@@ -4,23 +4,24 @@ var Subject = require('../models/subject');
 var User = require('../models/user');
 
 //show all
-router.get('/users/:id/subjects', function(req, res) {
-  User.findById(req.params.id, function(err, user) {
-    if (err) {
-      res.status(500).json(err);
-    } else {
-      Subject.find({}, function(err, subjects) {
-        if (err) {
-          res.status(500).json(err);
-        } else {
-          res.status(200).json(subjects);
-        }
-      });
-    }
-  });
-});
+// router.get('/users/:id/subjects', function(req, res) {
+//   User.findById(req.params.id, function(err, user) {
+//     if (err) {
+//       res.status(500).json(err);
+//     } else {
+//       Subject.find({}, function(err, subjects) {
+//         if (err) {
+//           res.status(500).json(err);
+//         } else {
+//           res.status(200).json(subjects);
+//         }
+//       });
+//     }
+//   });
+// });
+
 //create new subject
-router.post('/users/:id/subjects', function(req, res) {
+router.post('/users/:id/subjects/add', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
@@ -30,7 +31,6 @@ router.post('/users/:id/subjects', function(req, res) {
           res.status(500).json(err);
         } else {
           subject.teacher = req.body.subject.teacher;
-          subject.resources = req.body.subject.resources;
           subject.save();
           user.subjects.push(subject);
           user.save();
@@ -48,6 +48,7 @@ router.get('users/:id/subjects/:subject_id', function(req, res) {
       res.status(500).json(err);
     } else {
       Subject.findById(req.params.subject_id, function(err, foundSubject) {
+        //Populate Subject
         if (err) {
           res.status(500).json(err);
         } else {
