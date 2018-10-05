@@ -1,9 +1,9 @@
-var mongoose=require('mongoose');
+var mongoose = require('mongoose');
 
-var lectureSchema=new mongoose.Schema({
-    description:String,
-    date:String,
-    time:String
+var lectureSchema = new mongoose.Schema({
+  description: String,
+  startDate: Date,
+  endDate: Date,
 });
 
-module.exports=mongoose.model("Lecture",lectureSchema);
+module.exports = mongoose.model('Lecture', lectureSchema);
