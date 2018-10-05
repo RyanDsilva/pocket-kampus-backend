@@ -48,9 +48,10 @@ router.get('users/:id/subjects/:subject_id', function(req, res) {
       res.status(500).json(err);
     } else {
       Subject.findById(req.params.subject_id)
-        .populate("lectures")
+        .populate('lectures')
+        .populate('submissions')
         .exec(function(err, foundSubject) {
-          //Populate Subject
+          //Populate Subjects
           if (err) {
             res.status(500).json(err);
           } else {

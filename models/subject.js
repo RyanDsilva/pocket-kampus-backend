@@ -3,10 +3,16 @@ var mongoose = require('mongoose');
 var subjectSchema = new mongoose.Schema({
   name: String,
   teacher: String,
-  lecture: [
+  lectures: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Lecture',
+    },
+  ],
+  submissions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Submission',
     },
   ],
 });
