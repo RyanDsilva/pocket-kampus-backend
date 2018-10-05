@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-//var Reminder = require('../models/reminder');
+var Reminder = require('../models/reminder');
 
 //create new reminder
 router.post('/reminders', function(req, res) {
@@ -17,34 +17,39 @@ router.post('/reminders', function(req, res) {
 });
 
 //Edit
-router.get("/reminders/:id/edit", function(req, res) {
-  Reminder.findById(req.params.id, function(err, foundReminder){
-      if(err){
-        res.status(500).json(err);
-      } else {
-        res.status(300).json(reminder);
-      }
-   });
-})
+router.get('/reminders/:id/edit', function(req, res) {
+  Reminder.findById(req.params.id, function(err, foundReminder) {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      res.status(300).json(foundReminder);
+    }
+  });
+});
 
 //Update
-router.put("/reminders/:id", function(req, res){
-  Reminder.findByIdAndUpdate(req.params.id, req.body.reminder, {new: true}, function(err, updatedReminder){
-      if(err){
+router.put('/reminders/:id', function(req, res) {
+  Reminder.findByIdAndUpdate(
+    req.params.id,
+    req.body.reminder,
+    { new: true },
+    function(err, updatedReminder) {
+      if (err) {
         res.status(500).json(err);
       } else {
-        res.status(300).json(reminder);
+        res.status(300).json(updatedReminder);
       }
-  });
-}) ;
+    }
+  );
+});
 
-router.delete("/reminders/:id", function(req, res){
-  Reminder.findByIdAndRemove(req.params.id, function(err){
-      if(err){
-        res.status(500).json(err);
-      } else{
-        res.status(300).json('Deleted reminder');
-      }
+router.delete('/reminders/:id', function(req, res) {
+  Reminder.findByIdAndRemove(req.params.id, function(err) {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      res.status(300).json('Deleted reminder');
+    }
   });
 });
 
