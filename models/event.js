@@ -7,7 +7,6 @@ var eventSchema =new mongoose.Schema({
     date:String,
     eventImage:String,
     hostCouncil:String
-
 });
 
 module.exports=mongoose.model("Event",eventSchema);

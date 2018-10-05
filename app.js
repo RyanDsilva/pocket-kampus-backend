@@ -16,11 +16,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+//routes
+const eventRoutes=require('./routes/event');
+
 const port = process.env.PORT || 3000;
 const db = process.env.DATABASEURL || 'mongodb://localhost/scheduletracker';
 
 mongoose.connect(db);
 
+
+app.use(eventRoutes);
 
 app.listen(port, () => {
   console.log('Server started on ' + port);
