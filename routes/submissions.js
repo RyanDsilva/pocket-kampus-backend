@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Subject = require('../models/subject');
 var Submission = require('../models/submission');
+var User = require('../models/user');
 
 //create new submission
 router.post('/users/:id/subjects/:subject_id/submissions/add', function(
@@ -27,12 +28,12 @@ router.post('/users/:id/subjects/:subject_id/submissions/add', function(
               submission.completed = req.body.submission.completed;
               submission.description = req.body.submission.description;
               submission.save();
-              user.subjects.submissions.push(submission);
+              subject.submissions.push(submission);
               subject.save();
-              user.save();
-              res.status(200).json(submission);
             }
           });
+          user.save();
+          res.status(200).json(user);
         }
       });
     }
@@ -74,7 +75,7 @@ router.put('/users/:id/subjects/:subject_id/submissions/:s_id/edit', function(
     if (err) {
       res.status(500).json(err);
     } else {
-      Subject.findById(req.params.id, function(err, subject) {
+      Subject.findById(req.params.subject_id, function(err, subject) {
         if (err) {
           res.status(500).json(err);
         } else {
@@ -90,8 +91,10 @@ router.put('/users/:id/subjects/:subject_id/submissions/:s_id/edit', function(
               }
             }
           );
+          subject.save();
         }
       });
+      user.save();
     }
   });
 });
