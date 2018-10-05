@@ -22,7 +22,7 @@ router.post('/register', function(req, res) {
       res.status(403).json(err);
     } else {
       passport.authenticate('local')(req, res, function() {
-        res.send(req.user);
+        res.status(200).json(req.user);
       });
     }
   });
@@ -35,7 +35,7 @@ router.post(
     failureRedirect: '/login',
   }),
   function(req, res) {
-    res.send(req.user);
+    res.status(200).json(req.user);
   }
 );
 
@@ -60,7 +60,7 @@ router.get('/users/:id/dashboard', function(req, res) {
 });
 
 //edit
-router.get('/users/:id/dashboard/edit', function(req, res) {
+router.get('/users/:id/edit', function(req, res) {
   User.findById(req.params.id, function(err, foundUser) {
     if (err) {
       res.status(500).json(err);
@@ -71,7 +71,7 @@ router.get('/users/:id/dashboard/edit', function(req, res) {
 });
 
 //update
-router.put('/users/:id/dashboard/edit', function(req, res) {
+router.put('/users/:id/edit', function(req, res) {
   User.findByIdAndUpdate(req.params.id, req.body.user, { new: true }, function(
     err,
     updatedUser
@@ -86,15 +86,7 @@ router.put('/users/:id/dashboard/edit', function(req, res) {
 
 //attendance
 router.get('/users/:id/getAttendance', function(req, res) {
-  User.findById(req.params.id)
-    .populate('attendance')
-    .exec(function(err, user) {
-      if (err) {
-        res.status(500).json(err);
-      } else {
-        res.status(200).json(user);
-      }
-    });
+  // TODO: Add Proper Logic
 });
 
 module.exports = router;

@@ -42,7 +42,7 @@ router.post('/users/:id/subjects/add', function(req, res) {
 });
 
 //show details of subject
-router.get('users/:id/subjects/:subject_id', function(req, res) {
+router.get('/users/:id/subjects/:subject_id', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
@@ -63,7 +63,7 @@ router.get('users/:id/subjects/:subject_id', function(req, res) {
 });
 
 //Edit
-router.get('users/:id/subjects/:subject_id/edit', function(req, res) {
+router.get('/users/:id/subjects/:subject_id/edit', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
@@ -80,7 +80,7 @@ router.get('users/:id/subjects/:subject_id/edit', function(req, res) {
 });
 
 //Update
-router.put('users/:id/subjects/:subject_id/edit', function(req, res) {
+router.put('/users/:id/subjects/:subject_id/edit', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
@@ -101,7 +101,7 @@ router.put('users/:id/subjects/:subject_id/edit', function(req, res) {
   });
 });
 
-router.delete('users/:id/subjects/:subject_id/delete', function(req, res) {
+router.delete('/users/:id/subjects/:subject_id/delete', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);

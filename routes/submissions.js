@@ -40,7 +40,7 @@ router.post('/users/:id/subjects/:subject_id/submissions/add', function(
 });
 
 //Edit
-router.get('users/:id/subjects/:subject_id/submissions/:s_id/edit', function(
+router.get('/users/:id/subjects/:subject_id/submissions/:s_id/edit', function(
   req,
   res
 ) {
@@ -66,7 +66,7 @@ router.get('users/:id/subjects/:subject_id/submissions/:s_id/edit', function(
 });
 
 //Update
-router.put('users/:id/subjects/:subject_id/submissions/:s_id/edit', function(
+router.put('/users/:id/subjects/:subject_id/submissions/:s_id/edit', function(
   req,
   res
 ) {
@@ -97,7 +97,7 @@ router.put('users/:id/subjects/:subject_id/submissions/:s_id/edit', function(
 });
 
 router.put(
-  'users/:id/subjects/:subject_id/submissions/:s_id/markAsCompleted',
+  '/users/:id/subjects/:subject_id/submissions/:s_id/markAsCompleted',
   function(req, res) {
     User.findById(req.params.id, function(err, user) {
       if (err) {

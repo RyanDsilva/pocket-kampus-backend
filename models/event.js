@@ -4,10 +4,9 @@ var eventSchema = new mongoose.Schema({
   type: String,
   name: String,
   description: String,
-  startDate: Date,
-  endDate: Date,
+  date: Date,
   eventImage: String,
-  hostCouncil: String,
+  host: String,
 });
 
 module.exports = mongoose.model('Event', eventSchema);

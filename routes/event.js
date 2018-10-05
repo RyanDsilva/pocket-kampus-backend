@@ -14,7 +14,7 @@ router.get('/events', function(req, res) {
 });
 
 //create
-router.post('/events', function(req, res) {
+router.post('/events/add', function(req, res) {
   Event.create({ name: req.body.event.name }, function(err, event) {
     if (err) {
       res.status(500).json(err);
@@ -23,7 +23,7 @@ router.post('/events', function(req, res) {
       event.description = req.body.event.description;
       event.date = req.body.event.date;
       event.eventImage = req.body.event.eventImage;
-      event.hostCouncil = req.body.event.hostCouncil;
+      event.host = req.body.event.host;
       event.save();
       res.status(200).json(event);
     }
