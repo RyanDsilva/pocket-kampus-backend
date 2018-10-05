@@ -3,7 +3,10 @@ var mongoose = require('mongoose');
 var submissionSchema = new mongoose.Schema({
   title: String,
   subject: String,
-  startDate: Date.now,
+  startDate: {
+    type: Date,
+    default: Date.now,
+  },
   endDate: Date,
   completed: Boolean,
   description: String,
