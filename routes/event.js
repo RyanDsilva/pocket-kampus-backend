@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var Event = require('../models/event');
+var User = require('../models/user');
+var Reminder = require('../models/reminder');
 
 //get all events
 router.get('/events', function(req, res) {
@@ -76,6 +78,27 @@ router.delete('/events/:id/delete', function(req, res) {
       res.status(200).json('Deleted event!');
     }
   });
+});
+
+router.post('/events/:id/register', function(req, res) {
+  User.findById(req.body.uid, (err, user) => {
+    if (err) {
+      res.status(500).json(err);
+    } else {
+      Reminder.create({ title: req.body.event.name }, function(err, reminder) {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          reminder.description = req.body.event.description;
+          reminder.time = req.body.event.date;
+          reminder.save();
+          user.reminders.push(reminder);
+          user.save();
+        }
+      });
+    }
+  });
+  //NodeMailer
 });
 
 module.exports = router;
