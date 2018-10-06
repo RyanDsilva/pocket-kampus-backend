@@ -19,6 +19,7 @@ app.use(cors());
 //routes
 var reminderRoutes = require('./routes/reminders');
 var subjectRoutes = require('./routes/subjects');
+var lectureRoutes = require('./routes/lectures');
 
 const port = process.env.PORT || 3000;
 const db = process.env.DATABASEURL || 'mongodb://localhost/scheduletracker';
@@ -28,6 +29,7 @@ mongoose.connect(db);
 //use routes
 app.use(reminderRoutes);
 app.use(subjectRoutes);
+app.use(lectureRoutes);
 
 app.listen(port, () => {
   console.log('Server started on ' + port);
