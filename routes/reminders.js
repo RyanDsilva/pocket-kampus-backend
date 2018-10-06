@@ -19,6 +19,8 @@ router.post('/users/:id/reminders/add', function(req, res) {
           reminder.description = req.body.reminder.description;
           reminder.time = req.body.reminder.time;
           reminder.save();
+          user.reminders.push(reminder);
+          user.save();
           res.status(200).json(reminder);
         }
       });

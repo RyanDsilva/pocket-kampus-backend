@@ -17,7 +17,7 @@ router.post('/users/:id/subjects/:subject_id/submissions/add', function(
         if (err) {
           res.status(500).json(err);
         } else {
-          Submission.create({ title: req.body.submission.name }, function(
+          Submission.create({ title: req.body.submission.title }, function(
             err,
             submission
           ) {

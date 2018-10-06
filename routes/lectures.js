@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var Subject = require('../models/subject');
+var Lecture = require('../models/lecture');
 var User = require('../models/user');
 
-//create new subject
+//create new submission
 router.post('/users/:id/subjects/:subject_id/lectures/add', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
@@ -13,48 +14,33 @@ router.post('/users/:id/subjects/:subject_id/lectures/add', function(req, res) {
         if (err) {
           res.status(500).json(err);
         } else {
-          Lecture.create({ title: req.body.subject.name }, function(
+          Lecture.create({ date: req.body.lecture.time }, function(
             err,
-            subject
+            submission
           ) {
             if (err) {
               res.status(500).json(err);
             } else {
-              subject.teacher = req.body.subject.teacher;
+              lecture.date = req.body.lecture.date;
+              lecture.description = req.body.lecture.description;
+              lecture.save();
+              subject.lectures.push(lecture);
               subject.save();
-              user.subjects.push(subject);
-              user.save();
-              res.status(200).json(subject);
             }
           });
+          user.save();
+          res.status(200).json(user);
         }
       });
     }
   });
 });
 
-//show details of subject
-router.get('users/:id/subjects/:subject_id', function(req, res) {
-  User.findById(req.params.id, function(err, user) {
-    if (err) {
-      res.status(500).json(err);
-    } else {
-      Subject.findById(req.params.subject_id)
-        .populate('lectures')
-        .exec(function(err, foundSubject) {
-          //Populate Subject
-          if (err) {
-            res.status(500).json(err);
-          } else {
-            res.status(200).json(foundSubject);
-          }
-        });
-    }
-  });
-});
-
 //Edit
-router.get('users/:id/subjects/:subject_id/edit', function(req, res) {
+router.get('/users/:id/subjects/:subject_id/lectures/:l_id/edit', function(
+  req,
+  res
+) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
@@ -63,7 +49,13 @@ router.get('users/:id/subjects/:subject_id/edit', function(req, res) {
         if (err) {
           res.status(500).json(err);
         } else {
-          res.status(200).json(foundSubject);
+          Lecture.findById(req.params.l_id, function(err, foundLecture) {
+            if (err) {
+              res.status(500).json(err);
+            } else {
+              res.status(200).json(foundLecture);
+            }
+          });
         }
       });
     }
@@ -71,37 +63,89 @@ router.get('users/:id/subjects/:subject_id/edit', function(req, res) {
 });
 
 //Update
-router.put('users/:id/subjects/:subject_id/edit', function(req, res) {
+router.put('/users/:id/subjects/:subject_id/lectures/:l_id/edit', function(
+  req,
+  res
+) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
     } else {
-      Subject.findByIdAndUpdate(
-        req.params.subject_id,
-        req.body.subject,
-        { new: true },
-        function(err, updatedSubject) {
-          if (err) {
-            res.status(500).json(err);
-          } else {
-            res.status(200).json(updatedSubject);
-          }
+      Subject.findById(req.params.subject_id, function(err, subject) {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          Lecture.findByIdAndUpdate(
+            req.params.l_id,
+            req.body.lecture,
+            { new: true },
+            function(err, updatedLecture) {
+              if (err) {
+                res.status(500).json(err);
+              } else {
+                res.status(200).json(updatedLecture);
+              }
+            }
+          );
+          subject.save();
         }
-      );
+      });
+      user.save();
     }
   });
 });
 
-router.delete('users/:id/subjects/:subject_id/delete', function(req, res) {
+//mark as attended
+router.put(
+  '/users/:id/subjects/:subject_id/lectures/:l_id/markAsAttended',
+  function(req, res) {
+    User.findById(req.params.id, function(err, user) {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        Subject.findById(req.params.subject_id, function(err, subject) {
+          if (err) {
+            res.status(500).json(err);
+          } else {
+            Lecture.findByIdAndUpdate(
+              req.params.l_id,
+              req.body.lecture,
+              { new: true },
+              function(err, updatedLecture) {
+                if (err) {
+                  res.status(500).json(err);
+                } else {
+                  res.status(200).json(updatedLecture);
+                }
+              }
+            );
+          }
+        });
+      }
+    });
+  }
+);
+
+//delete(teacher absent)
+router.delete('/users/:id/subjects/:subject_id/lectures/:l_id/delete', function(
+  req,
+  res
+) {
   User.findById(req.params.id, function(err, user) {
     if (err) {
       res.status(500).json(err);
     } else {
-      Subject.findByIdAndRemove(req.params.subject_id, function(err) {
+      Subject.findById(req.params.subject_id, function(err, subject) {
         if (err) {
           res.status(500).json(err);
         } else {
-          res.status(200).json('Deleted Subject');
+          Lecture.findByIdAndRemove(req.params.l_id, function(err) {
+            if (err) {
+              res.status(500).json(err);
+            } else {
+              res.status(200).json('Deleted Lecture');
+            }
+          });
         }
       });
     }

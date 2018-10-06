@@ -26,7 +26,7 @@ router.post('/users/:id/subjects/add', function(req, res) {
     if (err) {
       res.status(500).json(err);
     } else {
-      Subject.create({ title: req.body.subject.name }, function(err, subject) {
+      Subject.create({ name: req.body.subject.name }, function(err, subject) {
         if (err) {
           res.status(500).json(err);
         } else {

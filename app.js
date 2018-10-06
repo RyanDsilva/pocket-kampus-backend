@@ -32,6 +32,7 @@ const eventRoutes = require('./routes/event');
 const reminderRoutes = require('./routes/reminders');
 const userRoutes = require('./routes/index');
 const bookRoutes = require('./routes/books');
+const lectureRoutes = require('./routes/lectures');
 
 const port = process.env.PORT || 3000;
 const db = process.env.DATABASEURL || 'mongodb://localhost/scheduletracker';
@@ -45,6 +46,7 @@ app.use(subjectRoutes);
 app.use(submissionRoutes);
 app.use(userRoutes);
 app.use(bookRoutes);
+app.use(lectureRoutes);
 
 app.listen(port, () => {
   console.log('Server started on ' + port);
