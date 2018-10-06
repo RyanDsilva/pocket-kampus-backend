@@ -3,7 +3,7 @@ var router = express.Router();
 var Book = require('../models/book');
 
 //show all books
-router.get('/books', function(req, res) {
+router.get('/library/books', function(req, res) {
   Book.find({}, function(err, books) {
     if (err) {
       res.status(500).json(err);
@@ -14,7 +14,7 @@ router.get('/books', function(req, res) {
 });
 
 //create new reminder
-router.post('/books/add', function(req, res) {
+router.post('/library/books/add', function(req, res) {
   Book.create({ title: req.body.book.title }, function(err, book) {
     if (err) {
       res.status(500).json(err);
