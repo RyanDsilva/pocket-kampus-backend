@@ -3,6 +3,7 @@ var router = express.Router();
 var Event = require('../models/event');
 var User = require('../models/user');
 var Reminder = require('../models/reminder');
+var transporter = require('../middleware/mailer');
 
 //get all events
 router.get('/events', function(req, res) {
@@ -96,9 +97,14 @@ router.post('/events/:id/register', function(req, res) {
           user.save();
         }
       });
+      transporter.sendMail({
+        from: 'byteme.kjsce@gmail.com',
+        to: user.email,
+        subject: 'Event Registration Complete',
+        html: '<b>Thank you for registering!</b>',
+      });
     }
   });
-  //NodeMailer
 });
 
 module.exports = router;
