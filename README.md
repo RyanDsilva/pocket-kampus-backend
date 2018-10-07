@@ -1,4 +1,4 @@
-# College Kampus ![Build](https://img.shields.io/badge/build-passing-green.svg)
+# Pocket Kampus ![Build](https://img.shields.io/badge/build-passing-green.svg)
 
 <p align="center">
   <a href="#" rel="noopener">
