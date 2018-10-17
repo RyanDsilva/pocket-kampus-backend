@@ -45,7 +45,7 @@ $ node app.js
 
 ---
 
-## Contributers
+## Contributors
 
 - [Ryan Dsilva](https://github.com/RyanDsilva)
 - [Neha Patil](https://github.com/Nehaa-Patil)
